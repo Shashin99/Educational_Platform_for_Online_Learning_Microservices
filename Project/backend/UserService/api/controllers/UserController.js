@@ -72,3 +72,27 @@ exports.newUser = async (req, res) => {
         }
     });
 };
+
+exports.editUser = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id)) {
+        return res.status(400).send(req.params.id);
+    }
+
+    var updateRecords = {
+        privilege: req.body.privilege,
+        active: req.body.active,
+    };
+
+    User.findByIdAndUpdate(
+        req.params.id,
+        { $set: updateRecords },
+        { new: true },
+        (err, docs) => {
+            if (!err) {
+                res.send(docs);
+            } else {
+                console.log(JSON.stringify(err, undefined, 2));
+            }
+        }
+    );
+};
