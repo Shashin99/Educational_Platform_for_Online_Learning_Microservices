@@ -3,20 +3,29 @@ var ObjectID = require("mongoose").Types.ObjectId;
 var md5 = require("md5");
 var { User } = require("../models/User");
 
+exports.getAll = async (req, res) => {
+    User.find((err, docs) => {
+        if (!err) {
+            res.send(docs);
+        } else {
+            console.log(JSON.stringify(err, undefined, 2));
+        }
+    });
+};
 
-exports.getId = async (req,res)=>{
-    if(!ObjectID.isValid(req.params.id)){
-        return res.status(400).send(req.params.id)
+exports.getId = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id)) {
+        return res.status(400).send(req.params.id);
     }
 
-    User.findById(req.params.id,(err,docs)=>{
-        if(!err){
-            res.send(docs)
-        }else{
-            console.log(JSON.stringify(err,undefined,2))
+    User.findById(req.params.id, (err, docs) => {
+        if (!err) {
+            res.send(docs);
+        } else {
+            console.log(JSON.stringify(err, undefined, 2));
         }
-    })
-}
+    });
+};
 
 exports.login = async (req, res) => {
     let email = req.body.email;
