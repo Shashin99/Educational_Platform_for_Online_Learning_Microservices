@@ -1,4 +1,5 @@
 const express = require("express");
+var ObjectID = require("mongoose").Types.ObjectId;
 var { Course } = require("../models/Course");
 
 exports.getAll = async (req, res) => {
@@ -13,17 +14,17 @@ exports.getAll = async (req, res) => {
 
 exports.getId = async (req, res) => {
     if (!ObjectID.isValid(req.params.id)) {
-        return res.status(400).send(req.params.id)
+        return res.status(400).send(req.params.id);
     }
 
     Course.findById(req.params.id, (err, docs) => {
         if (!err) {
-            res.send(docs)
+            res.send(docs);
         } else {
-            console.log(JSON.stringify(err, undefined, 2))
+            console.log(JSON.stringify(err, undefined, 2));
         }
-    })
-}
+    });
+};
 
 exports.newCourse = async (req, res) => {
     var newRecord = new Course({
@@ -44,4 +45,33 @@ exports.newCourse = async (req, res) => {
             res.status(err);
         }
     });
+};
+
+exports.editCourse = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id)) {
+        return res.status(400).send(req.params.id);
+    }
+
+    var updateRecords = {
+        note1: req.body.note1,
+        note2: req.body.note2,
+        note3: req.body.note3,
+        note4: req.body.note4,
+        note5: req.body.note5,
+        video_link: req.body.video_link,
+        quiz_details: req.body.quiz_details,
+    };
+
+    Course.findByIdAndUpdate(
+        req.params.id,
+        { $set: updateRecords },
+        { new: true },
+        (err, docs) => {
+            if (!err) {
+                res.send(docs);
+            } else {
+                console.log(JSON.stringify(err, undefined, 2));
+            }
+        }
+    );
 };
