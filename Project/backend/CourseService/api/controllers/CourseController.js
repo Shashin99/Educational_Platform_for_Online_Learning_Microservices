@@ -75,3 +75,17 @@ exports.editCourse = async (req, res) => {
         }
     );
 };
+
+exports.deleteCourse = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id)) {
+        return res.status(400).send(req.params.id);
+    }
+
+    Course.findByIdAndRemove(req.params.id, (err, docs) => {
+        if (!err) {
+            res.send(docs);
+        } else {
+            res.send(err);
+        }
+    });
+};
