@@ -1,0 +1,23 @@
+const express = require("express");
+var { Course } = require("../models/Course");
+
+exports.newCourse = async (req, res) => {
+    var newRecord = new Course({
+        note1: req.body.note1,
+        note2: req.body.note2,
+        note3: req.body.note3,
+        note4: req.body.note4,
+        note5: req.body.note5,
+        video_link: req.body.video_link,
+        quiz_details: req.body.quiz_details,
+    });
+
+    newRecord.save((err, docs) => {
+        if (!err) {
+            console.log(docs);
+            res.status(200).send({ data: "success" });
+        } else {
+            res.status(err);
+        }
+    });
+};
