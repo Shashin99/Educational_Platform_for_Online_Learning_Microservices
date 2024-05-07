@@ -120,3 +120,17 @@ exports.editUser = async (req, res) => {
         }
     );
 };
+
+exports.deleteUser = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id)) {
+        return res.status(400).send(req.params.id);
+    }
+
+    User.findByIdAndRemove(req.params.id, (err, docs) => {
+        if (!err) {
+            res.send(docs);
+        } else {
+            res.send(err);
+        }
+    });
+};
