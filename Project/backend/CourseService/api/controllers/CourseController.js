@@ -11,6 +11,20 @@ exports.getAll = async (req, res) => {
     });
 };
 
+exports.getId = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id)) {
+        return res.status(400).send(req.params.id)
+    }
+
+    Course.findById(req.params.id, (err, docs) => {
+        if (!err) {
+            res.send(docs)
+        } else {
+            console.log(JSON.stringify(err, undefined, 2))
+        }
+    })
+}
+
 exports.newCourse = async (req, res) => {
     var newRecord = new Course({
         note1: req.body.note1,
