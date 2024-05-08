@@ -25,6 +25,7 @@ exports.getId = async (req, res) => {
         }
     });
 };
+
 exports.newEnroll = async (req, res) => {
     var newRecord = new Enroll({
         course_id: req.body.course_id,
@@ -69,4 +70,18 @@ exports.editEnroll = async (req, res) => {
             }
         }
     );
+};
+
+exports.deleteEnroll = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id)) {
+        return res.status(400).send(req.params.id);
+    }
+
+    Enroll.findByIdAndRemove(req.params.id, (err, docs) => {
+        if (!err) {
+            res.send(docs);
+        } else {
+            res.send(err);
+        }
+    });
 };
