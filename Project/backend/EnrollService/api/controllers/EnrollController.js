@@ -43,3 +43,30 @@ exports.newEnroll = async (req, res) => {
         }
     });
 };
+
+exports.editEnroll = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id)) {
+        return res.status(400).send(req.params.id);
+    }
+
+    var updateRecords = {
+        course_id: req.body.course_id,
+        user_id: req.body.user_id,
+        date: req.body.date,
+        time: req.body.time,
+        status: req.body.status,
+    };
+
+    Enroll.findByIdAndUpdate(
+        req.params.id,
+        { $set: updateRecords },
+        { new: true },
+        (err, docs) => {
+            if (!err) {
+                res.send(docs);
+            } else {
+                console.log(JSON.stringify(err, undefined, 2));
+            }
+        }
+    );
+};
