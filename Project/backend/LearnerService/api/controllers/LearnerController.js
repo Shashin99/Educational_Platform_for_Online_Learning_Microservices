@@ -152,3 +152,32 @@ exports.newLearner = async (req, res) => {
         });
     }
 };
+
+exports.editLearner = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id)) {
+        return res.status(400).send(req.params.id);
+    }
+
+    var updateRecords = {
+        course_id: req.body.course_id,
+        user_id: req.body.user_id,
+        note1: req.body.note1,
+        note2: req.body.note2,
+        note3: req.body.note3,
+        note4: req.body.note4,
+        note5: req.body.note5,
+    };
+
+    Learner.findByIdAndUpdate(
+        lFound._id.toHexString(),
+        { $set: updateRecords },
+        { new: true },
+        (err, docs) => {
+            if (!err) {
+                res.send(docs);
+            } else {
+                console.log(JSON.stringify(err, undefined, 2));
+            }
+        }
+    );
+};
