@@ -2,6 +2,16 @@ const express = require("express");
 var { Learner } = require("../models/Learner");
 var { Enroll } = require("../models/Enroll");
 
+exports.getAll = async (req, res) => {
+    Learner.find((err, docs) => {
+        if (!err) {
+            res.send(docs);
+        } else {
+            console.log(JSON.stringify(err, undefined, 2));
+        }
+    });
+};
+
 exports.newLearner = async (req, res) => {
     let lFound = await Learner.findOne({
         course_id: req.body.course_id,
