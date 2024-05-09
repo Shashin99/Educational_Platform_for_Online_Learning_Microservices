@@ -28,7 +28,7 @@ class nav extends React.Component {
                                 justifyContent: "space-between",
                             }}
                         >
-                            <Typography variant="h5">Course Web</Typography>
+                            <Typography variant="h5">EduWave</Typography>
 
                             <Box
                                 sx={{
@@ -123,7 +123,7 @@ class nav extends React.Component {
                                     justifyContent: "space-between",
                                 }}
                             >
-                                <Typography variant="h5">Course Web</Typography>
+                                <Typography variant="h5">EduWave</Typography>
 
                                 <Box
                                     sx={{
@@ -170,7 +170,7 @@ class nav extends React.Component {
                                     justifyContent: "space-between",
                                 }}
                             >
-                                <Typography variant="h5">Course Web</Typography>
+                                <Typography variant="h5">EduWave</Typography>
 
                                 <Box
                                     sx={{
