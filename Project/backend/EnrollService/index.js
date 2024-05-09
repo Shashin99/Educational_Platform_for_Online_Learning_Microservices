@@ -8,7 +8,7 @@ var EnrollRoutes = require("./api/routes/Enroll.js");
 var app = express();
 app.use(bodyParser.json());
 app.use(cors({ origin: "*" }));
-app.listen(3500, () => console.log("Server started at : 3500"));
+app.listen(4003, () => console.log("Server started at : 4003"));
 
 app.use("/Enroll", EnrollRoutes);
 
