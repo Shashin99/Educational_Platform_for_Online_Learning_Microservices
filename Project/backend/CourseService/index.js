@@ -8,7 +8,7 @@ var CourseRoutes = require("./api/routes/Course.js");
 var app = express();
 app.use(bodyParser.json());
 app.use(cors({ origin: "*" }));
-app.listen(3500, () => console.log("Server started at : 3500"));
+app.listen(4004, () => console.log("Server started at : 4004"));
 
 app.use("/Course", CourseRoutes);
 
