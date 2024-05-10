@@ -4,6 +4,11 @@ import { Grid, Button, Card, CardContent, Typography } from '@material-ui/core'
 
 function Admin() {
 
+  const logout = () => {
+    localStorage.clear();
+    window.location.href = "/login";
+  }
+
   return (
     <div className="App">
       <br />
@@ -42,6 +47,7 @@ function Admin() {
                 <Button
                   variant="contained"
                   color="secondary"
+                  onClick={() => logout()}
                   fullWidth
                 >Clear</Button>
               </Grid>
