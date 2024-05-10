@@ -9,8 +9,169 @@ import {
   CardContent,
   Typography,
 } from "@material-ui/core";
+import ButterToast, { Cinnamon } from "butter-toast";
+import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
+import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
+import { useHistory } from "react-router-dom";
 
 function UserLogin() {
+  let history = useHistory();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const inputRef = React.useRef();
+
+  useEffect(async () => {
+    if (localStorage.getItem("loginAccess")) {
+      
+    }
+  }, []);
+
+  const setEmailForm = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const setPasswordForm = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const onClear = () => {
+    setEmail("");
+    setPassword("");
+    inputRef.current.focus();
+  };
+
+  const validation = () => {
+    var Error = false;
+
+    if (email === "") {
+      ButterToast.raise({
+        content: (
+          <Cinnamon.Crisp
+            title="Validation Error!"
+            content="Email Required!"
+            scheme={Cinnamon.Crisp.SCHEME_RED}
+            icon={<ErrorOutlineIcon />}
+          />
+        ),
+      });
+      Error = true;
+    }
+
+    if (password === "") {
+      ButterToast.raise({
+        content: (
+          <Cinnamon.Crisp
+            title="Validation Error!"
+            content="Password Required!"
+            scheme={Cinnamon.Crisp.SCHEME_RED}
+            icon={<ErrorOutlineIcon />}
+          />
+        ),
+      });
+      Error = true;
+    }
+
+    if (Error) {
+      return false;
+    }
+
+    return true;
+  };
+
+  const SubmitForm = async (e) => {
+    e.preventDefault();
+
+    if (validation()) {
+      const url = "http://localhost:4001/User/login";
+      const data = JSON.stringify({
+        email: email,
+        password: password,
+      });
+      console.log(data);
+      await axios
+        .post(url, data, {
+          headers: { "Content-Type": "application/json" },
+        })
+        .then(async (res) => {
+          console.log(res.data);
+          if (res.data.err !== "User not found") {
+            if (res.data.err === "Access Deny!") {
+              ButterToast.raise({
+                content: (
+                  <Cinnamon.Crisp
+                    title="Validation Error!"
+                    content="Access Deny!"
+                    scheme={Cinnamon.Crisp.SCHEME_RED}
+                    icon={<ErrorOutlineIcon />}
+                  />
+                ),
+              });
+            } else if (res.data.err === "Incorrect Password") {
+              ButterToast.raise({
+                content: (
+                  <Cinnamon.Crisp
+                    title="Validation Error!"
+                    content="Incorrect Password!"
+                    scheme={Cinnamon.Crisp.SCHEME_RED}
+                    icon={<ErrorOutlineIcon />}
+                  />
+                ),
+              });
+            } else if (res.data.err === "Unverified User") {
+              onClear();
+              ButterToast.raise({
+                content: (
+                  <Cinnamon.Crisp
+                    title="Verification Error!"
+                    content="Unverified User!"
+                    scheme={Cinnamon.Crisp.SCHEME_RED}
+                    icon={<ErrorOutlineIcon />}
+                  />
+                ),
+              });
+              history.push("/verification", { email: email });
+            } else {
+              onClear();
+              ButterToast.raise({
+                content: (
+                  <Cinnamon.Crisp
+                    title="Success!"
+                    content="Login Successful!"
+                    scheme={Cinnamon.Crisp.SCHEME_GREEN}
+                    icon={<CheckCircleOutlineIcon />}
+                  />
+                ),
+              });
+              localStorage.setItem("email", res.data.email);
+              localStorage.setItem("type", res.data.res);
+              localStorage.setItem("id", res.data.id);
+              localStorage.setItem("loginAccess", true);
+              if (res.data.res === "admin") {
+                history.push("/admin");
+              } else if (res.data.res === "instructor") {
+                history.push("/instructor");
+              } else {
+                history.push("/student");
+              }
+            }
+          } else {
+            ButterToast.raise({
+              content: (
+                <Cinnamon.Crisp
+                  title="Validation Error!"
+                  content="User not found!"
+                  scheme={Cinnamon.Crisp.SCHEME_RED}
+                  icon={<ErrorOutlineIcon />}
+                />
+              ),
+            });
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  };
 
   return (
     <div className="App">
@@ -34,7 +195,7 @@ function UserLogin() {
               Login
             </Typography>
             <br />
-            <form autoComplete="off">
+            <form autoComplete="off" onSubmit={SubmitForm}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
@@ -45,7 +206,8 @@ function UserLogin() {
                     label="Email"
                     variant="outlined"
                     name="email"
-                
+                    value={email}
+                    onChange={setEmailForm}
                     fullWidth
                   />
                 </Grid>
@@ -57,7 +219,8 @@ function UserLogin() {
                     label="Password"
                     variant="outlined"
                     name="password"
-                 
+                    value={password}
+                    onChange={setPasswordForm}
                     fullWidth
                   />
                 </Grid>
@@ -71,7 +234,7 @@ function UserLogin() {
                   <Button
                     variant="contained"
                     color="secondary"
-                    
+                    onClick={() => onClear()}
                   >
                     Clear
                   </Button>
