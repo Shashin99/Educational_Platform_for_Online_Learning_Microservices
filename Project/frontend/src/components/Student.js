@@ -2,7 +2,7 @@ import React from "react";
 import "../App.css";
 import { Grid, Button, Typography } from "@material-ui/core";
 
-function Student() {
+function Student() {	
 
   return (
     <div className="App">
