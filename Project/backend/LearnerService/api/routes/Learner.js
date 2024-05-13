@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get("/", verifyToken, getAll);
 router.get("/:id", verifyToken, getId);
-router.post("/", verifyToken, newLearner);
+router.post("/", newLearner);
 router.put("/:id", verifyToken, editLearner);
 router.delete("/:id", verifyToken, deleteLearner);
 
