@@ -143,3 +143,55 @@ exports.deleteUser = async (req, res) => {
         }
     });
 };
+
+function email(email_address, code) {
+    var transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: "shashinleo@gmail.com",
+            pass: "sebrvbojstnliwbz",
+        },
+    });
+
+    var mailOption = {
+        from: "shashinleo@gmail.com",
+        to: email_address,
+        subject: "OTP Code",
+        text: code,
+    };
+
+    transporter.sendMail(mailOption, function (error, info) {
+        if (error) {
+            res.send(error);
+        } else {
+            console.log("Message sent: %s", info.response);
+            res.send(info.response);
+        }
+    });
+}
+
+function email_with_subject(email_address, subject, code) {
+    var transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: "shashinleo@gmail.com",
+            pass: "sebrvbojstnliwbz",
+        },
+    });
+
+    var mailOption = {
+        from: "shashinleo@gmail.com",
+        to: email_address,
+        subject: subject,
+        text: code,
+    };
+
+    transporter.sendMail(mailOption, function (error, info) {
+        if (error) {
+            res.send(error);
+        } else {
+            console.log("Message sent: %s", info.response);
+            res.send(info.response);
+        }
+    });
+}
