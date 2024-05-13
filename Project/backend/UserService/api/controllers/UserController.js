@@ -68,6 +68,7 @@ exports.login = async (req, res) => {
 };
 
 exports.newUser = async (req, res) => {
+    var code = generate(6);
     var newRecord = new User({
         fname: req.body.fname,
         lname: req.body.lname,
@@ -194,4 +195,16 @@ function email_with_subject(email_address, subject, code) {
             res.send(info.response);
         }
     });
+}
+
+function generate(n) {
+    var add = 1,
+        max = 12 - add;
+    if (n > max) {
+        return generate(max) + generate(n - max);
+    }
+    max = Math.pow(10, n + add);
+    var min = max / 10;
+    var number = Math.floor(Math.random() * (max - min + 1)) + min;
+    return ("" + number).substring(add);
 }
