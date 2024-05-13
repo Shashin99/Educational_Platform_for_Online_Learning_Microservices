@@ -1,4 +1,5 @@
 const express = require("express");
+const verifyToken = require("../middleware/authMiddleware");
 
 const {
     getAll,
@@ -10,10 +11,10 @@ const {
 
 const router = express.Router();
 
-router.get("/", getAll);
-router.get("/:id", getId);
-router.post("/", newLearner);
-router.put("/:id", editLearner);
-router.delete("/:id", deleteLearner);
+router.get("/", verifyToken, getAll);
+router.get("/:id", verifyToken, getId);
+router.post("/", verifyToken, newLearner);
+router.put("/:id", verifyToken, editLearner);
+router.delete("/:id", verifyToken, deleteLearner);
 
 module.exports = router;
