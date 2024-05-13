@@ -28,8 +28,18 @@ var User = mongoose.model("User", {
         required: true,
     },
 
+    access: {
+        type: Boolean,
+        required: true,
+    },
+
     active: {
         type: Boolean,
+        required: true,
+    },
+
+    otp: {
+        type: String,
         required: true,
     },
 
