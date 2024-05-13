@@ -1,7 +1,8 @@
 const express = require("express");
-var ObjectID = require('mongoose').Types.ObjectId
+var ObjectID = require("mongoose").Types.ObjectId;
 var { Learner } = require("../models/Learner");
 var { Enroll } = require("../models/Enroll");
+const nodemailer = require("nodemailer");
 
 exports.getAll = async (req, res) => {
     Learner.find((err, docs) => {
@@ -96,6 +97,11 @@ exports.newLearner = async (req, res) => {
                                 { new: true },
                                 (err, docs) => {
                                     if (!err) {
+                                        email_with_subject(
+                                            req.body.email,
+                                            "Course Enrollment",
+                                            "You have successfully enroll to the course."
+                                        );
                                         res.send(docs);
                                     } else {
                                         console.log(
@@ -196,3 +202,29 @@ exports.deleteLearner = async (req, res) => {
         }
     });
 };
+
+function email_with_subject(email_address, subject, code) {
+    var transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: "shashinleo@gmail.com",
+            pass: "sebrvbojstnliwbz",
+        },
+    });
+
+    var mailOption = {
+        from: "shashinleo@gmail.com",
+        to: email_address,
+        subject: subject,
+        text: code,
+    };
+
+    transporter.sendMail(mailOption, function (error, info) {
+        if (error) {
+            res.send(error);
+        } else {
+            console.log("Message sent: %s", info.response);
+            res.send(info.response);
+        }
+    });
+}
