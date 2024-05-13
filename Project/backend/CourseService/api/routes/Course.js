@@ -1,4 +1,5 @@
 const express = require("express");
+const verifyToken = require("../middleware/authMiddleware");
 
 const {
     getAll,
@@ -6,14 +7,16 @@ const {
     newCourse,
     editCourse,
     deleteCourse,
+    uploadFile,
 } = require("../controllers/CourseController");
 
 const router = express.Router();
 
-router.get("/", getAll);
-router.get("/:id", getId);
-router.post("/", newCourse);
-router.put("/:id", editCourse);
-router.delete("/:id", deleteCourse);
+router.get("/", verifyToken, getAll);
+router.get("/:id", verifyToken, getId);
+router.post("/", verifyToken, newCourse);
+router.post("/upload", verifyToken, uploadFile);
+router.put("/:id", verifyToken, editCourse);
+router.delete("/:id", verifyToken, deleteCourse);
 
 module.exports = router;
