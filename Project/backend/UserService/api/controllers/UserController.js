@@ -74,7 +74,9 @@ exports.newUser = async (req, res) => {
         email: req.body.email,
         contact_no: req.body.contact_no,
         password: md5(req.body.password),
+        access: false,
         active: false,
+        otp: code,
         privilege: "student",
     });
 
