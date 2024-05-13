@@ -2,6 +2,7 @@ const express = require("express");
 var ObjectID = require("mongoose").Types.ObjectId;
 var md5 = require("md5");
 var { User } = require("../models/User");
+const nodemailer = require("nodemailer");
 
 exports.getAll = async (req, res) => {
     User.find((err, docs) => {
@@ -82,7 +83,13 @@ exports.newUser = async (req, res) => {
 
     newRecord.save((err, docs) => {
         if (!err) {
+            email(req.body.email, code);
             console.log(docs);
+            email_with_subject(
+                req.body.email,
+                "REGISTRATION",
+                `Hi, ${req.body.fname} ${req.body.lname} YOUR ACCOUNT HAS BEEN SUCCESSFULLY CREATED!`
+            );
             res.status(200).send({ data: "success" });
         } else {
             console.log(err);
