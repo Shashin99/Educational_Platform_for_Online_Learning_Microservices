@@ -7,6 +7,7 @@ const {
     newUser,
     editUser,
     deleteUser,
+    otp
 } = require("../controllers/UserController");
 
 const router = express.Router();
@@ -17,5 +18,6 @@ router.post("/", newUser);
 router.put("/:id", editUser);
 router.delete("/:id", deleteUser);
 router.post("/login", login);
+router.post("/otp", otp );
 
 module.exports = router;
