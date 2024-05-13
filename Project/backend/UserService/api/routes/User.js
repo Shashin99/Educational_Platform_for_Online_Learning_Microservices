@@ -1,4 +1,5 @@
 const express = require("express");
+const verifyToken = require("../middleware/authMiddleware");
 
 const {
     getAll,
@@ -7,17 +8,17 @@ const {
     newUser,
     editUser,
     deleteUser,
-    otp
+    otp,
 } = require("../controllers/UserController");
 
 const router = express.Router();
 
-router.get("/", getAll);
-router.get("/:id", getId);
+router.get("/", verifyToken, getAll);
+router.get("/:id", verifyToken, getId);
 router.post("/", newUser);
-router.put("/:id", editUser);
-router.delete("/:id", deleteUser);
+router.put("/:id", verifyToken, editUser);
+router.delete("/:id", verifyToken, deleteUser);
 router.post("/login", login);
-router.post("/otp", otp );
+router.post("/otp", otp);
 
 module.exports = router;
