@@ -1,1 +1,9 @@
 ## Title: Development of an Educational Platform for Online Learning
+
+Group_ID - S2-SE-WE-03
+
+Github Repository Link :
+https://github.com/Shashin99/Educational_Platform_for_Online_Learning_Microservices.git
+
+YouTube Video Link :
+https://www.youtube.com/channel/UCwgDaMx__oyJl9EA1PmtM_Q
