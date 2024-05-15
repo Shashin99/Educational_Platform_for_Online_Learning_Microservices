@@ -12,8 +12,8 @@ RUN npm install
 # Copy the rest of the application code to the working directory
 COPY . .
 
-# Expose port 4004 for the application
-EXPOSE 4004
+# Expose port 4000 for the application
+EXPOSE 4000
 
 # Start the application
 CMD [ "node", "index.js" ]
