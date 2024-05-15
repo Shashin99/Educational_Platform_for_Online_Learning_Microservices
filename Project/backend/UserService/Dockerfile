@@ -12,7 +12,7 @@ RUN npm install
 # Copy the rest of the application code to the working directory
 COPY . .
 
-# Expose port 4000 for the application
+# Expose port 4001 for the application
 EXPOSE 4001
 
 # Start the application
