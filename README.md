@@ -64,7 +64,6 @@ To get started with EduWave:
 ## Contributors
 
 - [List of contributors]
-Sure, here's a table with two columns and four rows:
 
 | Name               | Username        |
 |--------------------|-----------------|
