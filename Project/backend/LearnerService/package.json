@@ -1,0 +1,29 @@
+{
+  "name": "learner_service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "date-format": "^4.0.14",
+    "dateformat": "^5.0.3",
+    "express": "^4.17.1",
+    "generate-unique-id": "^2.0.1",
+    "md5": "^2.3.0",
+    "mongoose": "^6.0.5",
+    "multer": "^1.4.3",
+    "nodemailer": "^6.9.1",
+    "nodemon": "^2.0.12",
+    "socket.io": "^4.5.4",
+    "uniqid": "^5.4.0"
+  },
+  "devDependencies": {
+    "package": "^1.0.1"
+  }
+}
