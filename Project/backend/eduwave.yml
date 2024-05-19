@@ -1,0 +1,193 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user
+  template:
+    metadata:
+      labels:
+        app: user
+    spec:
+      containers:
+      - name: user
+        image: shashin99/userservice
+        ports:
+        - containerPort: 4001
+        imagePullPolicy: Never
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: user
+  labels:
+    app: user
+spec:
+  ports:
+  - port: 4001
+    targetPort: 4001
+  selector:
+    app: user
+  type: LoadBalancer
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+      - name: auth
+        image: shashin99/authservice
+        ports:
+        - containerPort: 4000
+        imagePullPolicy: Never
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth
+  labels:
+    app: auth
+spec:
+  ports:
+  - port: 4000
+    targetPort: 4000
+  selector:
+    app: auth
+  type: LoadBalancer
+  
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: learner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: learner
+  template:
+    metadata:
+      labels:
+        app: learner
+    spec:
+      containers:
+      - name: learner
+        image: shashin99/learnerservice
+        ports:
+        - containerPort: 4002
+        imagePullPolicy: Never
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: learner
+  labels:
+    app: learner
+spec:
+  ports:
+  - port: 4002
+    targetPort: 4002
+  selector:
+    app: learner
+  type: LoadBalancer
+    
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: course
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: course
+  template:
+    metadata:
+      labels:
+        app: course
+    spec:
+      containers:
+      - name: course
+        image: shashin99/courseservice
+        ports:
+        - containerPort: 4004
+        imagePullPolicy: Never
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: course
+  labels:
+    app: course
+spec:
+  ports:
+  - port: 4004
+    targetPort: 4004
+  selector:
+    app: course
+  type: LoadBalancer
+  
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: enroll
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: enroll
+  template:
+    metadata:
+      labels:
+        app: enroll
+    spec:
+      containers:
+      - name: enroll
+        image: shashin99/enrollservice
+        ports:
+        - containerPort: 4003
+        imagePullPolicy: Never
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: enroll
+  labels:
+    app: enroll
+spec:
+  ports:
+  - port: 4003
+    targetPort: 4003
+  selector:
+    app: enroll
+  type: LoadBalancer
+  

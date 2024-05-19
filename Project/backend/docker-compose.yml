@@ -1,0 +1,32 @@
+version: '3'
+services:
+  apiGateway:
+    image: shashin99/apigateway:latest
+    ports:
+      - "4000:4000"
+    command: node index.js
+
+  userService:
+    image: shashin99/userservice:latest
+    ports:
+      - "4001:4001"
+    command: node index.js
+
+  learnerService:
+    image: shashin99/learnerservice:latest
+    ports:
+      - "4002:4002"
+    command: node index.js
+
+  enrollService:
+    image: shashin99/enrollservice:latest
+    ports:
+      - "4003:4003"
+    command: node index.js 
+
+  courseService:
+    image: shashin99/courseservice:latest
+    ports:
+      - "4004:4004"
+    command: node index.js
+    
